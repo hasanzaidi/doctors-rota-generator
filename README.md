@@ -26,9 +26,7 @@ Three shifts which are the same of weekends and weekdays:
 1. Cannot have more than 3-way swap (to ease complexity on doctors to stick to it)
 1. When doing a long day/night on a weekend, can split over two weekends (to make swaps easier)
 
-## Some things to note:
-
-## Future feature
+## Future features
 1. Add concept of ward so that cannot have < 2 on a ward
 1. Add ability to configure number of hours that each of the 10 doctors can work
 1. Add ability to configure other values such as max hours, max days in a row
