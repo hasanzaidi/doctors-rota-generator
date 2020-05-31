@@ -12,6 +12,12 @@ Run application using:
 sbt run
 ```
 
+Package and run application as fat JAR:
+```
+sbt assembly
+java -jar rota.jar 2020-06-01
+```
+
 ## Parts
 The application is split into two parts:
 - Generate a rota over an initial 10 week period
