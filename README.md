@@ -16,8 +16,8 @@ Three shifts which are the same of weekends and weekdays:
 1. No doctor can work more than 47 hours
 1. No doctor can work more than 7 days in a row
 1. Over a 10 week/10 doctor period they must do:
-   * 4 long days on Monday-Thursday 
-   * 4 nights on Monday-Thursday (and the 4 nights must be consecutive)
+   * 4 long days which fall on a weekday (i.e. Monday-Thursday) 
+   * 4 nights on Monday-Thursday where the 4 nights must be consecutive
    * 1 long day weekend (i.e. a long day on Friday, Saturday and Sunday on same weekend)
    * 1 night weekend (i.e. a night on Friday, Saturday and Sunday on same weekend)
 1. After a night shift, a doctor must wait a minimum 13 hours before doing another shift.
