@@ -15,16 +15,16 @@ Three shifts which are the same of weekends and weekdays:
 ## Rules for rota generation
 1. No doctor can work more than 47 hours
 1. No doctor can work more than 7 days in a row
-1. Over a 10 week/10 doctor period they cannot do more than:
- * 5 long days on weekdays 
- * 5 nights on weekdays
- * 1 long day weekend (i.e. a long day on both Saturday and Sunday on same weekend)
- * 1 night weekend (i.e. a night on both Saturday and Sunday on same weekend)
+1. Over a 10 week/10 doctor period they must do:
+ * 4 long days on Monday-Thursday 
+ * 4 nights on Monday-Thursday (and the 4 nights must be consecutive)
+ * 1 long day weekend (i.e. a long day on Friday, Saturday and Sunday on same weekend)
+ * 1 night weekend (i.e. a night on Friday, Saturday and Sunday on same weekend)
 1. After a night shift, a doctor must wait a minimum 13 hours before doing another shift.
 
 ## Rules for swaps
 1. Cannot have more than 3-way swap (to ease complexity on doctors to stick to it)
-1. When doing a long day/night on a weekend, can split over two weekends (to make swaps easier)
+1. When doing a long day/night on a weekend, can split over multiple weekends (to make swaps easier)
 
 ## Future features
 1. Add concept of ward so that cannot have < 2 on a ward
