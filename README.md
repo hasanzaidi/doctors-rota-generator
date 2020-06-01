@@ -38,6 +38,7 @@ Three shifts which are the same of weekends and weekdays:
    * 4 nights on Monday-Thursday where the 4 nights must be consecutive
    * 1 long day weekend (i.e. a long day on Friday, Saturday and Sunday on same weekend)
    * 1 night weekend (i.e. a night on Friday, Saturday and Sunday on same weekend)
+1. Only one doctor can work on an anti-social shift (i.e. long day or Night, either weekend/weekday)
 
 ## Rules for swaps
 1. Cannot have more than 3-way swap (to ease complexity on doctors to stick to it)
