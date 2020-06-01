@@ -13,6 +13,7 @@ compileScalastyle := scalastyle.in(Compile).toTask("").value
 (compile in Compile) := ((compile in Compile) dependsOn compileScalastyle).value
 
 // add Scalastyle task to test
+(scalastyleConfig in Test) := baseDirectory.value / "scalastyle-test-config.xml"
 lazy val testScalastyle = taskKey[Unit]("testScalastyle")
 testScalastyle := scalastyle.in(Test).toTask("").value
 (test in Test) := ((test in Test) dependsOn testScalastyle).value

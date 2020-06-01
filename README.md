@@ -24,13 +24,13 @@ The application is split into two parts:
 - Given a doctors asks for leave for a particular period of days, suggest swaps if not possible to accomodate
 
 ## Shifts
-Three shifts which are the same of weekends and weekdays:
-* "Normal" - 09:00 - 17:00
+There are three shifts:
+* "Normal" - 09:00 - 17:00 (only on weekdays)
 * "Long day" - 08:30 - 21:00
 * "Night" - 20:30 - 09:00 (+1)
 
 ## Rules for rota generation
-1. No doctor can work more than 47 hours
+1. No doctor can work more than 47 hours per week on average. But they can work more than 47 hours in a single week.
 1. No doctor can work more than 7 days in a row
 1. After a night shift, a doctor must wait a minimum 13 hours before doing another shift.
 1. Over a 10 week/10 doctor period they must do:
