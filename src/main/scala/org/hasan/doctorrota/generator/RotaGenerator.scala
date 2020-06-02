@@ -16,24 +16,20 @@ class RotaGenerator(var startDate: LocalDate, numOfWeeks: Int) {
 
     val doctors = Nil
     for (i <- 1 to numOfWeeks) {
-      val doctor = Doctor(i, 0)
+      val doctor = Doctor("i", 0, Nil)
       doctors :+ doctor
     }
 
-    val rota = generateInitialRota(startDate, numOfWeeks, doctors)
+    val rota = generateInitialRota(startDate, numOfWeeks)
     rota
   }
 
-  private def generateInitialRota(startDate: LocalDate, numOfWeeks: Int, doctors: Seq[Doctor]): Rota = {
-    var weeklyRotas = Nil
-    for (i <- 0 to numOfWeeks - 1) {
-      val weeklyRota = generateWeeklyRota(startDate, i, doctors)
-      weeklyRotas :+ weeklyRota
-    }
-    Rota(weeklyRotas)
-  }
-
-  private def generateWeeklyRota(startDate: LocalDate, weekNumber: Int, doctors: Seq[Doctor]): WeeklyRota = {
-    WeeklyRota(Seq())
+  private def generateInitialRota(startDate: LocalDate, numOfWeeks: Int): Rota = {
+//    val weeklyRotas = Nil
+//    for (i <- 0 to numOfWeeks - 1) {
+//      val weeklyRota = WeeklyRota(startDate)
+//      weeklyRotas :+ weeklyRota
+//    }
+    Rota(Nil)
   }
 }

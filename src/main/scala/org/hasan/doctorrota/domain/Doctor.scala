@@ -5,5 +5,6 @@ package org.hasan.doctorrota.domain
  *
  * @param name           the name of the doctor (currently just an integer)
  * @param hoursAllocated the number of hours they have been allocated
+ * @param shifts         the shifts they have been allocated to
  */
-case class Doctor(name: Int, hoursAllocated: Int)
+case class Doctor(name: String, hoursAllocated: Int, shifts: Seq[Shift])
