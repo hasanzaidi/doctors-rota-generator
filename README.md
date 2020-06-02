@@ -18,6 +18,11 @@ sbt assembly
 java -jar rota.jar 2020-06-01
 ```
 
+Run Scala formatting on all files:
+```
+sbt scalafmtAll
+```
+
 ## Parts
 The application is split into two parts:
 - Generate a rota over an initial 10 week period
