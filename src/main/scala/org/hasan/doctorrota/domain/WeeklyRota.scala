@@ -17,7 +17,7 @@ object WeeklyRotaFactory {
     val shifts = new ListBuffer[Shift]()
 
     // Week day shifts
-    for (i <- 0 to 5) {
+    for (i <- 0 to 3) {
       val longDayShift = ShiftFactory(LONG_DAY, startDate.plusDays(i))
       val nightShift = ShiftFactory(NIGHT, startDate.plusDays(i))
       val normalShift = ShiftFactory(NORMAL, startDate.plusDays(i))
@@ -25,7 +25,7 @@ object WeeklyRotaFactory {
     }
 
     // Weekend shifts
-    for (i <- 5 to 7) {
+    for (i <- 4 to 6) {
       val longDayShift = ShiftFactory(LONG_DAY, startDate.plusDays(i))
       val nightShift = ShiftFactory(NIGHT, startDate.plusDays(i))
       shifts += longDayShift += nightShift
