@@ -3,6 +3,7 @@ package org.hasan.doctorrota.domain
 import java.time.LocalDate
 import org.hasan.doctorrota.domain.ShiftType._
 import scala.collection.mutable.ListBuffer
+import org.hasan.doctorrota.domain.DayType._
 
 /**
  * Class representing all the shifts in a week.
@@ -16,18 +17,18 @@ object WeeklyRotaFactory {
   def apply(startDate: LocalDate): WeeklyRota = {
     val shifts = new ListBuffer[Shift]()
 
-    // Week day shifts
+    // Weekday shifts
     for (i <- 0 to 3) {
-      val longDayShift = ShiftFactory(LONG_DAY, startDate.plusDays(i))
-      val nightShift = ShiftFactory(NIGHT, startDate.plusDays(i))
-      val normalShift = ShiftFactory(NORMAL, startDate.plusDays(i))
+      val longDayShift = ShiftFactory(LONG_DAY, WEEKDAY, startDate.plusDays(i))
+      val nightShift = ShiftFactory(NIGHT, WEEKDAY, startDate.plusDays(i))
+      val normalShift = ShiftFactory(NORMAL, WEEKDAY, startDate.plusDays(i))
       shifts += longDayShift += nightShift += normalShift
     }
 
     // Weekend shifts
     for (i <- 4 to 6) {
-      val longDayShift = ShiftFactory(LONG_DAY, startDate.plusDays(i))
-      val nightShift = ShiftFactory(NIGHT, startDate.plusDays(i))
+      val longDayShift = ShiftFactory(LONG_DAY, WEEKEND, startDate.plusDays(i))
+      val nightShift = ShiftFactory(NIGHT, WEEKEND, startDate.plusDays(i))
       shifts += longDayShift += nightShift
     }
 

@@ -1,5 +1,7 @@
 package org.hasan.doctorrota.domain
 
+import scala.collection.mutable.ListBuffer
+
 /**
  * Class representing a doctor.
  *
@@ -7,4 +9,4 @@ package org.hasan.doctorrota.domain
  * @param hoursAllocated the number of hours they have been allocated
  * @param shifts         the shifts they have been allocated to
  */
-case class Doctor(name: String, hoursAllocated: Int, shifts: Seq[Shift])
+case class Doctor(name: String, hoursAllocated: Int, shifts: ListBuffer[Shift])

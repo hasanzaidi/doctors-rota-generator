@@ -5,4 +5,4 @@ package org.hasan.doctorrota.domain
  *
  * @param shifts the number of weekly shifts
  */
-case class Rota(shifts: Seq[WeeklyRota])
+case class Rota(shifts: Seq[WeeklyRota], doctors: Seq[Doctor])
