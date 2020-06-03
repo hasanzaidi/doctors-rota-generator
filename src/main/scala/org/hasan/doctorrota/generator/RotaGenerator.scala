@@ -57,11 +57,11 @@ class RotaGenerator(var startDate: LocalDate, numOfWeeks: Int) {
   }
 
   private def allocateShiftsToDoctors(weeklyRotas: Seq[WeeklyRota], doctors: ListBuffer[Doctor]): Rota = {
-    doctors.zipWithIndex.foreach { case (d, i) => allocateWeeklyShift(d, i, weeklyRotas) }
+    doctors.zipWithIndex.foreach { case (d, i) => allocateNightShiftsToDoctor(d, i, weeklyRotas) }
     Rota(weeklyRotas, doctors.toSeq)
   }
 
-  private def allocateWeeklyShift(doctor: Doctor, i: Int, weeklyRotas: Seq[WeeklyRota]): Unit = {
+  private def allocateNightShiftsToDoctor(doctor: Doctor, i: Int, weeklyRotas: Seq[WeeklyRota]): Unit = {
     // Assign all Weekday night shifts in week i to doctor i
     doctor.shifts ++= weeklyRotas(i).shifts.filter(s => s.shiftType == NIGHT && s.dayType == WEEKDAY).toBuffer
 
@@ -69,6 +69,12 @@ class RotaGenerator(var startDate: LocalDate, numOfWeeks: Int) {
     // night shifts in a row
     doctor.shifts ++= weeklyRotas(weeklyRotas.size - i - 1).shifts
       .filter(s => s.shiftType == NIGHT && s.dayType == WEEKEND)
+      .toBuffer
+
+    // Assign all weekend long day shifts in week i + 2 % n to doctor i. This ensures they can't do a whole week of
+    // night shifts/long days in a row
+    doctor.shifts ++= weeklyRotas((i + 2) % weeklyRotas.size).shifts
+      .filter(s => s.shiftType == LONG_DAY && s.dayType == WEEKEND)
       .toBuffer
   }
 }
