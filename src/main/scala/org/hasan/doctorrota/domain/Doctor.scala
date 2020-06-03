@@ -9,4 +9,4 @@ import scala.collection.mutable.ListBuffer
  * @param hoursAllocated the number of hours they have been allocated
  * @param shifts         the shifts they have been allocated to
  */
-case class Doctor(name: String, hoursAllocated: Int, shifts: ListBuffer[Shift])
+case class Doctor(name: String, var hoursAllocated: Double, shifts: ListBuffer[Shift])

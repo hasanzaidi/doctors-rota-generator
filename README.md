@@ -46,7 +46,7 @@ There are three shifts:
 1. Only one doctor can work on an anti-social shift (i.e. long day or Night, either weekend/weekday)
 
 ## Rules for swaps
-1. Cannot have more than 3-way swap (to ease complexity on doctors to stick to it)
+1. Cannot have more than 3-way swap (to ease complexity on doctors to remember it)
 1. When doing a long day/night on a weekend, can split over multiple weekends (to make swaps easier)
 
 ## Future features
