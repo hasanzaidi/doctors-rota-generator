@@ -59,9 +59,30 @@ class RotaGenerator(var startDate: LocalDate, numOfWeeks: Int) {
     doctors
   }
 
+  def isValidShift2(doctor: Doctor, proposed: Shift): Boolean = {
+    !doctor.shifts.exists(s => (s.startDateTime.getDayOfYear == proposed.startDateTime.getDayOfYear))
+  }
+
+  def allocateSingleShiftToDoctors(doctors: ListBuffer[Doctor], proposed: Shift): Unit = {
+    for (i <- 0 to doctors.size - 1) {
+      val doctor = doctors(i)
+      if (isValidShift2(doctors(i), proposed)) {
+        doctor.shifts += proposed
+        doctor.hoursAllocated = doctor.hoursAllocated + 8
+      }
+    }
+  }
+
+  def allocateWeekdayNormalToDoctors(doctors: ListBuffer[Doctor], weeklyRotas: Seq[WeeklyRota]): Unit = {
+    val shifts =
+      weeklyRotas.map(w => w.shifts.filter(s => s.shiftType == NORMAL && s.dayType == WEEKDAY)).flatten.toBuffer
+    shifts.map(s => allocateSingleShiftToDoctors(doctors, s))
+  }
+
   private def allocateShiftsToDoctors(weeklyRotas: Seq[WeeklyRota], doctors: ListBuffer[Doctor]): Rota = {
     doctors.zipWithIndex.foreach { case (d, i) => allocateWeekendShiftsToDoctor(d, i, weeklyRotas) }
     allocateWeekdayLongDayToDoctors(doctors, weeklyRotas)
+    allocateWeekdayNormalToDoctors(doctors, weeklyRotas)
     Rota(weeklyRotas, doctors.toSeq)
   }
 
