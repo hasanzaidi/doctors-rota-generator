@@ -12,8 +12,6 @@ import org.hasan.doctorrota.domain.ShiftType._
 import org.hasan.doctorrota.domain.DayType._
 
 import scala.collection.mutable
-import scala.collection.mutable
-import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 import scala.util.Random
 
