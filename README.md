@@ -1,5 +1,5 @@
 # doctors-rota-generator
-Command line application for generating a rota for doctors
+Command line application for generating a rota for doctors.
 
 ## Run Application
 Run unit tests:
@@ -52,4 +52,4 @@ There are three shifts:
 ## Future features
 1. Add concept of ward so that cannot have < 2 on a ward
 1. Add ability to configure number of hours that each of the 10 doctors can work
-1. Add ability to configure other values such as max hours, max days in a row
+1. Add ability to configure other values such as number of weeks, max hours, max days in a row
