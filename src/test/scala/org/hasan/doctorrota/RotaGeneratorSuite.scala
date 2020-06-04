@@ -10,7 +10,8 @@ import org.scalatest.matchers.should.Matchers
 class RotaGeneratorSuite extends AnyFunSuite with Matchers {
   test("should generate a rota") {
     // Given:
-    val generator = new RotaGenerator(LocalDate.of(2020, 6, 15), 5)
+    val numWeeks = 10
+    val generator = new RotaGenerator(LocalDate.of(2020, 6, 15), numWeeks)
 
     // When:
     val rota = generator.generate()
@@ -18,7 +19,7 @@ class RotaGeneratorSuite extends AnyFunSuite with Matchers {
     // Then:
     // TODO: Replace with validity check of rota
     val doctors = rota.doctors
-    doctors should have size (5)
+    doctors should have size (numWeeks)
 
     val doctor1: Doctor = doctors(0)
     doctor1.name should equal("Name 1")

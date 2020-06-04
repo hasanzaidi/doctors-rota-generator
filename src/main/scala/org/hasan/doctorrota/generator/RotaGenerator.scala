@@ -96,7 +96,7 @@ class RotaGenerator(var startDate: LocalDate, numOfWeeks: Int) {
     for (_ <- 0 to 3) {
       var foundValidShift = false
       var index = r.nextInt(shifts.size)
-      while (!foundValidShift) {
+      while ((!foundValidShift) && (shifts.size > 1)) {
         index = r.nextInt(shifts.size)
         foundValidShift = isValidShift(doctor, shifts(index))
       }
