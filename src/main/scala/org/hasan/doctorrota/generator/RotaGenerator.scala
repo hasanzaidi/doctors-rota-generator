@@ -13,6 +13,7 @@ import org.hasan.doctorrota.domain.DayType._
 
 import scala.collection.mutable
 import scala.collection.mutable
+import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 import scala.util.Random
 
@@ -64,11 +65,7 @@ class RotaGenerator(var startDate: LocalDate, numOfWeeks: Int) {
     !doctor.shifts.exists(s => (s.startDateTime.getDayOfYear == proposed.startDateTime.getDayOfYear))
   }
 
-  def allocateSingleShiftToDoctors(
-      doctors: ListBuffer[Doctor],
-      proposed: Shift,
-      map: mutable.Map[Shift, Seq[Doctor]]
-  ): Unit = {
+  def allocateSingleShiftToDoctors(doctors: ListBuffer[Doctor], proposed: Shift): Unit = {
     for (i <- 0 to doctors.size - 1) {
       val doctor = doctors(i)
       if (isValidShift2(doctors(i), proposed)) {
@@ -78,30 +75,35 @@ class RotaGenerator(var startDate: LocalDate, numOfWeeks: Int) {
     }
   }
 
-  def allocateWeekdayNormalToDoctors(
-      doctors: ListBuffer[Doctor],
-      weeklyRotas: Seq[WeeklyRota],
-      map: mutable.Map[Shift, Seq[Doctor]]
-  ): Unit = {
+  def allocateWeekdayNormalToDoctors(doctors: ListBuffer[Doctor], weeklyRotas: Seq[WeeklyRota]): Unit = {
     val shifts =
       weeklyRotas.map(w => w.shifts.filter(s => s.shiftType == NORMAL && s.dayType == WEEKDAY)).flatten.toBuffer
-    shifts.map(s => allocateSingleShiftToDoctors(doctors, s, map))
+    shifts.map(s => allocateSingleShiftToDoctors(doctors, s))
+  }
+
+  def buildMap(d: Doctor, s: Shift, map: mutable.Map[Shift, ListBuffer[Doctor]]): Unit = {
+    if (map.contains(s)) {
+      val seq = map(s)
+      map.put(s, seq += d)
+    } else {
+      val e = new ListBuffer[Doctor]()
+      e += d
+      map.put(s, e)
+    }
   }
 
   private def allocateShiftsToDoctors(weeklyRotas: Seq[WeeklyRota], doctors: ListBuffer[Doctor]): Rota = {
-    val mutableMap = mutable.Map[Shift, Seq[Doctor]]()
-    doctors.zipWithIndex.foreach { case (d, i) => allocateWeekendShiftsToDoctor(d, i, weeklyRotas, mutableMap) }
-    allocateWeekdayLongDayToDoctors(doctors, weeklyRotas, mutableMap)
-    allocateWeekdayNormalToDoctors(doctors, weeklyRotas, mutableMap)
+    val mutableMap = mutable.Map[Shift, ListBuffer[Doctor]]()
+    doctors.zipWithIndex.foreach { case (d, i) => allocateWeekendShiftsToDoctor(d, i, weeklyRotas) }
+    allocateWeekdayLongDayToDoctors(doctors, weeklyRotas)
+    allocateWeekdayNormalToDoctors(doctors, weeklyRotas)
+
+    doctors.foreach(d => d.shifts.foreach(s => buildMap(d, s, mutableMap)))
+
     Rota(weeklyRotas, doctors.toSeq, mutableMap.toMap)
   }
 
-  private def allocateWeekendShiftsToDoctor(
-      doctor: Doctor,
-      i: Int,
-      weeklyRotas: Seq[WeeklyRota],
-      map: mutable.Map[Shift, Seq[Doctor]]
-  ): Unit = {
+  private def allocateWeekendShiftsToDoctor(doctor: Doctor, i: Int, weeklyRotas: Seq[WeeklyRota]): Unit = {
     // Assign all Weekday night shifts in week i to doctor i
     doctor.shifts ++= weeklyRotas(i).shifts.filter(s => s.shiftType == NIGHT && s.dayType == WEEKDAY).toBuffer
     doctor.hoursAllocated = doctor.hoursAllocated + (4 * 12.5)
@@ -121,20 +123,15 @@ class RotaGenerator(var startDate: LocalDate, numOfWeeks: Int) {
     doctor.hoursAllocated = doctor.hoursAllocated + (3 * 12.5)
   }
 
-  private def allocateWeekdayLongDayToDoctors(
-      doctors: ListBuffer[Doctor],
-      weeklyRotas: Seq[WeeklyRota],
-      map: mutable.Map[Shift, Seq[Doctor]]
-  ): Unit = {
+  private def allocateWeekdayLongDayToDoctors(doctors: ListBuffer[Doctor], weeklyRotas: Seq[WeeklyRota]): Unit = {
     val shifts =
       weeklyRotas.map(w => w.shifts.filter(s => s.shiftType == LONG_DAY && s.dayType == WEEKDAY)).flatten.toBuffer
-    doctors.map(d => allocateWeekdayLongDayToDoctor(d, shifts, map))
+    doctors.map(d => allocateWeekdayLongDayToDoctor(d, shifts))
   }
 
   private def allocateWeekdayLongDayToDoctor(
       doctor: Doctor,
-      shifts: mutable.Buffer[Shift],
-      map: mutable.Map[Shift, Seq[Doctor]]
+      shifts: mutable.Buffer[Shift]
   ): Unit = {
     val r = new Random()
     for (_ <- 0 to 3) {
