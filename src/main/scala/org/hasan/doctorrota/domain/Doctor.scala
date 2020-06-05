@@ -103,7 +103,8 @@ case class Doctor(name: String, var hoursAllocated: Double, shifts: ListBuffer[S
   def isValidShift(proposed: Shift): Boolean = {
     !this.shifts.exists(s =>
       (s.startDateTime.getDayOfYear == proposed.startDateTime.getDayOfYear)
-        || (s.shiftType == NIGHT && s.startDateTime.getDayOfYear + 1 == proposed.startDateTime.getDayOfYear)
+        || (s.shiftType == NIGHT && s.startDateTime.getDayOfYear + 1 == proposed.startDateTime.getDayOfYear
+          && proposed.shiftType != NIGHT)
     )
   }
 }
