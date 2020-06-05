@@ -26,16 +26,38 @@ case class Doctor(name: String, var hoursAllocated: Double, shifts: ListBuffer[S
       return false
     }
 
-    val sortedShifts = shifts.sortBy(s => s.startDateTime)
+    val groupedShifts: Map[(ShiftType, DayType), ListBuffer[Shift]] =
+      shifts.groupBy(s => (s.shiftType, s.dayType))
+
+    if (!groupedShifts.contains(NIGHT, WEEKEND) || groupedShifts(NIGHT, WEEKEND).size != 3) {
+      println("INVALID: Incorrect number of night weekend shifts")
+      return false
+    }
+
+    if (!groupedShifts.contains(LONG_DAY, WEEKEND) || groupedShifts(LONG_DAY, WEEKEND).size != 3) {
+      println("INVALID: Incorrect number of long day weekend shifts")
+      return false
+    }
+
+    if (!groupedShifts.contains(NIGHT, WEEKDAY) || groupedShifts(NIGHT, WEEKDAY).size != 4) {
+      println("INVALID: Incorrect number of night weekday shifts")
+      return false
+    }
+
+    if (!groupedShifts.contains(LONG_DAY, WEEKDAY) || groupedShifts(LONG_DAY, WEEKDAY).size != 4) {
+      println("INVALID: Incorrect number of long day weekday shifts")
+      return false
+    }
+
+    if (groupedShifts(NORMAL, WEEKDAY).size <= 1) {
+      println("INVALID: Not enough normal weekday shifts")
+      return false
+    }
 
     // Correct number of anti social shifts
-    var numWeekendNights = 0
-    var numWeekendLongDays = 0
-    var numWeekdayLongDays = 0
-    var numWeekdayNormal = 0
-    var numWeekdayNights = 0
     var currentConsecutiveStreak = 1
     var maxConsecutiveStreak = 1
+    val sortedShifts = shifts.sortBy(s => s.startDateTime)
     for (i <- 0 to sortedShifts.size - 1) {
       val shift = sortedShifts(i)
 
@@ -53,42 +75,13 @@ case class Doctor(name: String, var hoursAllocated: Double, shifts: ListBuffer[S
           currentConsecutiveStreak = 1
         }
       }
-
-      if ((shift.shiftType == LONG_DAY) && (shift.dayType == WEEKEND)) {
-        numWeekendLongDays = numWeekendLongDays + 1
-      }
-
-      if ((shift.shiftType == LONG_DAY) && (shift.dayType == WEEKDAY)) {
-        numWeekdayLongDays = numWeekdayLongDays + 1
-      }
-
-      if ((shift.shiftType == NIGHT) && (shift.dayType == WEEKDAY)) {
-        numWeekdayNights = numWeekdayNights + 1
-      }
-
-      if ((shift.shiftType == NIGHT) && (shift.dayType == WEEKEND)) {
-        numWeekendNights = numWeekendNights + 1
-      }
-
-      if ((shift.shiftType == NORMAL) && (shift.dayType == WEEKDAY)) {
-        numWeekdayNormal = numWeekdayNormal + 1
-      }
     }
 
-    if ((numWeekendNights != 3) || (numWeekendLongDays != 3) || (numWeekdayLongDays != 4) || (numWeekdayNights != 4)) {
-      println("INVALID: Not enough anti-social shifts")
-      return false
-    }
-
+// TODO: Fix this
 //    if (maxConsecutiveStreak > 7) {
 //      println("INVALID: Too many days in a row")
 //      return false
 //    }
-
-    if (numWeekdayNormal <= 1) {
-      println("INVALID: Not enough normal weekday shifts")
-      return false
-    }
 
     true
   }
