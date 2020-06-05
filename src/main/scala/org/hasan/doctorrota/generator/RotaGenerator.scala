@@ -60,7 +60,10 @@ class RotaGenerator(var startDate: LocalDate, numOfWeeks: Int) {
   }
 
   def isValidShift2(doctor: Doctor, proposed: Shift): Boolean = {
-    !doctor.shifts.exists(s => (s.startDateTime.getDayOfYear == proposed.startDateTime.getDayOfYear))
+    !doctor.shifts.exists(s =>
+      (s.startDateTime.getDayOfYear == proposed.startDateTime.getDayOfYear) ||
+        (s.shiftType == NIGHT && s.startDateTime.getDayOfYear + 1 == proposed.startDateTime.getDayOfYear)
+    )
   }
 
   def allocateSingleShiftToDoctors(doctors: ListBuffer[Doctor], proposed: Shift): Unit = {
