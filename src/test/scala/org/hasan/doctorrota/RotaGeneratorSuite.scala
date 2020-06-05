@@ -2,6 +2,7 @@ package org.hasan.doctorrota
 
 import java.time.LocalDate
 
+import org.hasan.doctorrota.config.DoctorInMemoryReader
 import org.hasan.doctorrota.generator.RotaGenerator
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
@@ -12,7 +13,7 @@ class RotaGeneratorSuite extends AnyFunSuite with Matchers {
   test("should generate a rota") {
     // Given:
     val numWeeks = 10
-    val generator = new RotaGenerator(LocalDate.of(2020, 6, 15), numWeeks)
+    val generator = new RotaGenerator(LocalDate.of(2020, 6, 15), numWeeks, new DoctorInMemoryReader(10))
 
     // When:
     val rota = generator.generate()

@@ -3,6 +3,7 @@ package org.hasan.doctorrota.generator
 import java.time.DayOfWeek
 import java.time.LocalDate
 
+import org.hasan.doctorrota.config.DoctorReader
 import org.hasan.doctorrota.domain.Doctor
 import org.hasan.doctorrota.domain.Rota
 import org.hasan.doctorrota.domain.Shift
@@ -20,8 +21,9 @@ import scala.util.Random
  *
  * @param startDate  the start date of the rota
  * @param numOfWeeks the number of weeks
+ * @param reader     reads in the list of doctors
  */
-class RotaGenerator(var startDate: LocalDate, numOfWeeks: Int) {
+class RotaGenerator(var startDate: LocalDate, numOfWeeks: Int, reader: DoctorReader) {
 
   /**
    * Generates the rota.
@@ -34,7 +36,7 @@ class RotaGenerator(var startDate: LocalDate, numOfWeeks: Int) {
       startDate = startDate.minusDays(startDate.getDayOfWeek.getValue - 1)
     }
 
-    val doctors = readDoctors()
+    val doctors = reader.read()
     val weeklyRotas = generateEmptyRota(startDate, numOfWeeks)
 
     allocateShiftsToDoctors(weeklyRotas, doctors)
@@ -47,16 +49,6 @@ class RotaGenerator(var startDate: LocalDate, numOfWeeks: Int) {
       weeklyRotas += weeklyRota
     }
     weeklyRotas.toSeq
-  }
-
-  private def readDoctors(): ListBuffer[Doctor] = {
-    // TODO: Read this from file
-    val doctors: ListBuffer[Doctor] = new ListBuffer[Doctor]()
-    for (i <- 1 to numOfWeeks) {
-      val doctor = Doctor("Name " + i, 0, new ListBuffer[Shift]())
-      doctors += doctor
-    }
-    doctors
   }
 
   def isValidShift2(doctor: Doctor, proposed: Shift): Boolean = {
