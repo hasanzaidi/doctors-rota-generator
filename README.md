@@ -33,16 +33,17 @@ There are three shifts:
 * "Normal" - 09:00 - 17:00 (only on weekdays)
 * "Long day" - 08:30 - 21:00
 * "Night" - 20:30 - 09:00 (+1)
+A weekday shift is defined as Monday-Thursday and a weekend shift is defined as Friday-Sunday.
 
 ## Rules for rota generation
 1. No doctor can work more than 47 hours per week on average. But they can work more than 47 hours in a single week.
 1. No doctor can work more than 7 days in a row
 1. After a night shift, a doctor must wait a minimum 13 hours before doing another shift.
 1. Over a 10 week/10 doctor period they must do:
-   * 4 long days which fall on a weekday (i.e. Monday-Thursday)
-   * 4 nights on Monday-Thursday where the 4 nights must be consecutive
-   * 1 long day weekend (i.e. a long day on Friday, Saturday and Sunday on same weekend)
-   * 1 night weekend (i.e. a night on Friday, Saturday and Sunday on same weekend)
+   * 4 long days which fall on a weekday (i.e. Monday-Thursday).
+   * 4 nights on a weekday. On the initial rota the 4 nights must be consecutive but can adjust when doing swaps.
+   * 3 long days on a weekend. On the initial rota the 3 long days must be consecutive but can adjust when doing swaps.
+   * 3 nights on a weekend. On the initial rota the 3 nights must be consecutive but can adjust when doing swaps.
 1. Only one doctor can work on an anti-social shift (i.e. long day or Night, either weekend/weekday)
 
 ## Rules for swaps
