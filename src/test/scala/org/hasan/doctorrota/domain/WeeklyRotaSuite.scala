@@ -1,7 +1,6 @@
 package org.hasan.doctorrota.domain
 
 import java.time.LocalDate
-import java.time.LocalDateTime
 
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
@@ -18,61 +17,25 @@ class WeeklyRotaSuite extends AnyFunSuite with Matchers {
     shifts should have size (18)
 
     // Weekday shifts
-    shifts(0) should equal(
-      Shift(LONG_DAY, WEEKDAY, LocalDateTime.of(2020, 6, 15, 8, 30), LocalDateTime.of(2020, 6, 15, 21, 0))
-    )
-    shifts(1) should equal(
-      Shift(NIGHT, WEEKDAY, LocalDateTime.of(2020, 6, 15, 20, 30), LocalDateTime.of(2020, 6, 16, 9, 0))
-    )
-    shifts(2) should equal(
-      Shift(NORMAL, WEEKDAY, LocalDateTime.of(2020, 6, 15, 9, 0), LocalDateTime.of(2020, 6, 15, 17, 0))
-    )
-    shifts(3) should equal(
-      Shift(LONG_DAY, WEEKDAY, LocalDateTime.of(2020, 6, 16, 8, 30), LocalDateTime.of(2020, 6, 16, 21, 0))
-    )
-    shifts(4) should equal(
-      Shift(NIGHT, WEEKDAY, LocalDateTime.of(2020, 6, 16, 20, 30), LocalDateTime.of(2020, 6, 17, 9, 0))
-    )
-    shifts(5) should equal(
-      Shift(NORMAL, WEEKDAY, LocalDateTime.of(2020, 6, 16, 9, 0), LocalDateTime.of(2020, 6, 16, 17, 0))
-    )
-    shifts(6) should equal(
-      Shift(LONG_DAY, WEEKDAY, LocalDateTime.of(2020, 6, 17, 8, 30), LocalDateTime.of(2020, 6, 17, 21, 0))
-    )
-    shifts(7) should equal(
-      Shift(NIGHT, WEEKDAY, LocalDateTime.of(2020, 6, 17, 20, 30), LocalDateTime.of(2020, 6, 18, 9, 0))
-    )
-    shifts(8) should equal(
-      Shift(NORMAL, WEEKDAY, LocalDateTime.of(2020, 6, 17, 9, 0), LocalDateTime.of(2020, 6, 17, 17, 0))
-    )
-    shifts(9) should equal(
-      Shift(LONG_DAY, WEEKDAY, LocalDateTime.of(2020, 6, 18, 8, 30), LocalDateTime.of(2020, 6, 18, 21, 0))
-    )
-    shifts(10) should equal(
-      Shift(NIGHT, WEEKDAY, LocalDateTime.of(2020, 6, 18, 20, 30), LocalDateTime.of(2020, 6, 19, 9, 0))
-    )
-    shifts(11) should equal(
-      Shift(NORMAL, WEEKDAY, LocalDateTime.of(2020, 6, 18, 9, 0), LocalDateTime.of(2020, 6, 18, 17, 0))
-    )
+    shifts(0) should equal(ShiftFactory(LONG_DAY, WEEKDAY, LocalDate.of(2020, 6, 15)))
+    shifts(1) should equal(ShiftFactory(NIGHT, WEEKDAY, LocalDate.of(2020, 6, 15)))
+    shifts(2) should equal(ShiftFactory(NORMAL, WEEKDAY, LocalDate.of(2020, 6, 15)))
+    shifts(3) should equal(ShiftFactory(LONG_DAY, WEEKDAY, LocalDate.of(2020, 6, 16)))
+    shifts(4) should equal(ShiftFactory(NIGHT, WEEKDAY, LocalDate.of(2020, 6, 16)))
+    shifts(5) should equal(ShiftFactory(NORMAL, WEEKDAY, LocalDate.of(2020, 6, 16)))
+    shifts(6) should equal(ShiftFactory(LONG_DAY, WEEKDAY, LocalDate.of(2020, 6, 17)))
+    shifts(7) should equal(ShiftFactory(NIGHT, WEEKDAY, LocalDate.of(2020, 6, 17)))
+    shifts(8) should equal(ShiftFactory(NORMAL, WEEKDAY, LocalDate.of(2020, 6, 17)))
+    shifts(9) should equal(ShiftFactory(LONG_DAY, WEEKDAY, LocalDate.of(2020, 6, 18)))
+    shifts(10) should equal(ShiftFactory(NIGHT, WEEKDAY, LocalDate.of(2020, 6, 18)))
+    shifts(11) should equal(ShiftFactory(NORMAL, WEEKDAY, LocalDate.of(2020, 6, 18)))
 
     // Weekend shifts
-    shifts(12) should equal(
-      Shift(LONG_DAY, WEEKEND, LocalDateTime.of(2020, 6, 19, 8, 30), LocalDateTime.of(2020, 6, 19, 21, 0))
-    )
-    shifts(13) should equal(
-      Shift(NIGHT, WEEKEND, LocalDateTime.of(2020, 6, 19, 20, 30), LocalDateTime.of(2020, 6, 20, 9, 0))
-    )
-    shifts(14) should equal(
-      Shift(LONG_DAY, WEEKEND, LocalDateTime.of(2020, 6, 20, 8, 30), LocalDateTime.of(2020, 6, 20, 21, 0))
-    )
-    shifts(15) should equal(
-      Shift(NIGHT, WEEKEND, LocalDateTime.of(2020, 6, 20, 20, 30), LocalDateTime.of(2020, 6, 21, 9, 0))
-    )
-    shifts(16) should equal(
-      Shift(LONG_DAY, WEEKEND, LocalDateTime.of(2020, 6, 21, 8, 30), LocalDateTime.of(2020, 6, 21, 21, 0))
-    )
-    shifts(17) should equal(
-      Shift(NIGHT, WEEKEND, LocalDateTime.of(2020, 6, 21, 20, 30), LocalDateTime.of(2020, 6, 22, 9, 0))
-    )
+    shifts(12) should equal(ShiftFactory(LONG_DAY, WEEKEND, LocalDate.of(2020, 6, 19)))
+    shifts(13) should equal(ShiftFactory(NIGHT, WEEKEND, LocalDate.of(2020, 6, 19)))
+    shifts(14) should equal(ShiftFactory(LONG_DAY, WEEKEND, LocalDate.of(2020, 6, 20)))
+    shifts(15) should equal(ShiftFactory(NIGHT, WEEKEND, LocalDate.of(2020, 6, 20)))
+    shifts(16) should equal(ShiftFactory(LONG_DAY, WEEKEND, LocalDate.of(2020, 6, 21)))
+    shifts(17) should equal(ShiftFactory(NIGHT, WEEKEND, LocalDate.of(2020, 6, 21)))
   }
 }

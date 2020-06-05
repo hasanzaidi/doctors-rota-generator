@@ -1,5 +1,6 @@
 package org.hasan.doctorrota.domain
 
+import java.time.LocalDate
 import java.time.LocalDateTime
 
 import org.hasan.doctorrota.domain.ShiftType._
@@ -15,7 +16,7 @@ class DoctorSuite extends AnyFunSuite with Matchers {
   test("can't have duplicate shifts") {
     // Given:
     val shifts = new ListBuffer[Shift]()
-    val shift1 = Shift(NORMAL, WEEKDAY, LocalDateTime.of(2020, 6, 15, 8, 30), LocalDateTime.of(2020, 6, 15, 21, 0))
+    val shift1 = ShiftFactory(NORMAL, WEEKDAY, LocalDate.of(2020, 6, 15))
     shifts += shift1 += shift1
 
     // When/Then:
@@ -40,8 +41,8 @@ class DoctorSuite extends AnyFunSuite with Matchers {
   test("must have 13 hours gap after night shift") {
     // Given:
     val shifts = new ListBuffer[Shift]()
-    val shift1 = Shift(NIGHT, WEEKDAY, LocalDateTime.of(2020, 6, 15, 8, 30), LocalDateTime.of(2020, 6, 15, 21, 0))
-    val shift2 = Shift(LONG_DAY, WEEKDAY, LocalDateTime.of(2020, 6, 16, 8, 30), LocalDateTime.of(2020, 6, 16, 21, 0))
+    val shift1 = ShiftFactory(NIGHT, WEEKDAY, LocalDate.of(2020, 6, 15))
+    val shift2 = ShiftFactory(LONG_DAY, WEEKDAY, LocalDate.of(2020, 6, 16))
 
     // When/Then:
     val doctor = Doctor(DOCTOR_NAME, 410, shifts += shift1 += shift2)
@@ -111,53 +112,50 @@ class DoctorSuite extends AnyFunSuite with Matchers {
   test("is valid proposed shift check for same day") {
     // Given:
     val shifts = new ListBuffer[Shift]()
-    val shift1 = Shift(NORMAL, WEEKDAY, LocalDateTime.of(2020, 6, 15, 21, 0), LocalDateTime.of(2020, 6, 16, 17, 0))
+    val shift1 = ShiftFactory(NORMAL, WEEKDAY, LocalDate.of(2020, 6, 15))
 
     // When/Then:
     val doctor = Doctor(DOCTOR_NAME, 410, shifts += shift1)
-    val shiftOnSameDay =
-      Shift(NORMAL, WEEKDAY, LocalDateTime.of(2020, 6, 15, 8, 30), LocalDateTime.of(2020, 6, 15, 21, 0))
+    val shiftOnSameDay = ShiftFactory(NORMAL, WEEKDAY, LocalDate.of(2020, 6, 15))
     doctor.isValidShift(shiftOnSameDay) shouldBe false
 
-    val shiftOnDifferentDay =
-      Shift(NORMAL, WEEKDAY, LocalDateTime.of(2020, 6, 16, 8, 30), LocalDateTime.of(2020, 6, 16, 21, 0))
+    val shiftOnDifferentDay = ShiftFactory(NORMAL, WEEKDAY, LocalDate.of(2020, 6, 16))
     doctor.isValidShift(shiftOnDifferentDay) shouldBe true
   }
 
   test("is valid proposed shift check for night day before") {
     // Given:
     val shifts = new ListBuffer[Shift]()
-    val shift1 = Shift(NIGHT, WEEKDAY, LocalDateTime.of(2020, 6, 15, 21, 0), LocalDateTime.of(2020, 6, 16, 17, 0))
+    val shift1 = ShiftFactory(NIGHT, WEEKDAY, LocalDate.of(2020, 6, 15))
 
     // When/Then:
     val doctor = Doctor(DOCTOR_NAME, 410, shifts += shift1)
-    val shiftNextDay =
-      Shift(NORMAL, WEEKDAY, LocalDateTime.of(2020, 6, 16, 8, 30), LocalDateTime.of(2020, 6, 15, 21, 0))
+    val shiftNextDay = ShiftFactory(NORMAL, WEEKDAY, LocalDate.of(2020, 6, 16))
     doctor.isValidShift(shiftNextDay) shouldBe false
 
-    val nightNextDay =
-      Shift(NIGHT, WEEKDAY, LocalDateTime.of(2020, 6, 16, 8, 30), LocalDateTime.of(2020, 6, 16, 21, 0))
+    val nightNextDay = ShiftFactory(NIGHT, WEEKDAY, LocalDate.of(2020, 6, 16))
     doctor.isValidShift(nightNextDay) shouldBe true
   }
 
   private def buildValidShifts(): ListBuffer[Shift] = {
     val shifts = new ListBuffer[Shift]()
-    val shift1 = Shift(NORMAL, WEEKDAY, LocalDateTime.of(2020, 6, 15, 8, 30), LocalDateTime.of(2020, 6, 15, 17, 0))
-    val shift2 = Shift(LONG_DAY, WEEKEND, LocalDateTime.of(2020, 6, 16, 8, 30), LocalDateTime.of(2020, 6, 19, 21, 0))
-    val shift3 = Shift(LONG_DAY, WEEKEND, LocalDateTime.of(2020, 6, 17, 8, 30), LocalDateTime.of(2020, 6, 20, 21, 0))
-    val shift4 = Shift(LONG_DAY, WEEKEND, LocalDateTime.of(2020, 6, 18, 8, 30), LocalDateTime.of(2020, 6, 21, 21, 0))
-    val shift5 = Shift(NIGHT, WEEKEND, LocalDateTime.of(2020, 6, 19, 8, 30), LocalDateTime.of(2020, 6, 15, 21, 0))
-    val shift6 = Shift(NIGHT, WEEKEND, LocalDateTime.of(2020, 6, 20, 8, 30), LocalDateTime.of(2020, 6, 16, 21, 0))
-    val shift7 = Shift(NIGHT, WEEKEND, LocalDateTime.of(2020, 6, 21, 8, 30), LocalDateTime.of(2020, 6, 17, 21, 0))
-    val shift8 = Shift(LONG_DAY, WEEKDAY, LocalDateTime.of(2020, 6, 23, 8, 30), LocalDateTime.of(2020, 6, 18, 21, 0))
-    val shift9 = Shift(LONG_DAY, WEEKDAY, LocalDateTime.of(2020, 6, 24, 8, 30), LocalDateTime.of(2020, 6, 19, 21, 0))
-    val shift10 = Shift(LONG_DAY, WEEKDAY, LocalDateTime.of(2020, 6, 25, 8, 30), LocalDateTime.of(2020, 6, 20, 21, 0))
-    val shift11 = Shift(LONG_DAY, WEEKDAY, LocalDateTime.of(2020, 6, 26, 8, 30), LocalDateTime.of(2020, 6, 21, 21, 0))
-    val shift12 = Shift(NIGHT, WEEKDAY, LocalDateTime.of(2020, 6, 27, 8, 30), LocalDateTime.of(2020, 6, 27, 21, 0))
-    val shift13 = Shift(NIGHT, WEEKDAY, LocalDateTime.of(2020, 6, 28, 8, 30), LocalDateTime.of(2020, 6, 28, 21, 0))
-    val shift14 = Shift(NIGHT, WEEKDAY, LocalDateTime.of(2020, 6, 29, 8, 30), LocalDateTime.of(2020, 6, 29, 21, 0))
-    val shift15 = Shift(NIGHT, WEEKDAY, LocalDateTime.of(2020, 7, 1, 8, 30), LocalDateTime.of(2020, 7, 1, 21, 0))
-    val shift16 = Shift(NORMAL, WEEKDAY, LocalDateTime.of(2020, 7, 3, 8, 30), LocalDateTime.of(2020, 7, 3, 17, 0))
+    val shift1 = ShiftFactory(NORMAL, WEEKDAY, LocalDate.of(2020, 6, 15))
+    val shift2 = ShiftFactory(LONG_DAY, WEEKEND, LocalDate.of(2020, 6, 16))
+    val shift3 = ShiftFactory(LONG_DAY, WEEKEND, LocalDate.of(2020, 6, 17))
+    val shift4 = ShiftFactory(LONG_DAY, WEEKEND, LocalDate.of(2020, 6, 18))
+    val shift5 = ShiftFactory(NIGHT, WEEKEND, LocalDate.of(2020, 6, 19))
+    val shift6 = ShiftFactory(NIGHT, WEEKEND, LocalDate.of(2020, 6, 20))
+    val shift7 = ShiftFactory(NIGHT, WEEKEND, LocalDate.of(2020, 6, 21))
+    val shift8 = ShiftFactory(LONG_DAY, WEEKDAY, LocalDate.of(2020, 6, 23))
+    val shift9 = ShiftFactory(LONG_DAY, WEEKDAY, LocalDate.of(2020, 6, 24))
+    val shift10 = ShiftFactory(LONG_DAY, WEEKDAY, LocalDate.of(2020, 6, 25))
+    val shift11 = ShiftFactory(LONG_DAY, WEEKDAY, LocalDate.of(2020, 6, 26))
+    val shift12 = ShiftFactory(NIGHT, WEEKDAY, LocalDate.of(2020, 6, 27))
+    val shift13 = ShiftFactory(NIGHT, WEEKDAY, LocalDate.of(2020, 6, 28))
+    val shift14 = ShiftFactory(NIGHT, WEEKDAY, LocalDate.of(2020, 6, 29))
+    val shift15 = ShiftFactory(NIGHT, WEEKDAY, LocalDate.of(2020, 7, 1))
+    val shift16 = ShiftFactory(NORMAL, WEEKDAY, LocalDate.of(2020, 7, 3))
+
     shifts += shift1 += shift2 += shift3 += shift4 += shift5 += shift6 += shift7 += shift8 += shift9 += shift10 += shift11 +=
       shift12 += shift13 += shift14 += shift15 += shift16
     shifts
