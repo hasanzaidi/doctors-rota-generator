@@ -40,7 +40,7 @@ A weekday shift is defined as Monday-Thursday and a weekend shift is defined as 
 1. No doctor can work more than 7 days in a row
 1. After a night shift, a doctor must wait a minimum 13 hours before doing another shift.
 1. Over a 10 week/10 doctor period they must do:
-   * 4 long days which fall on a weekday (i.e. Monday-Thursday).
+   * 4 long days which fall on a weekday.
    * 4 nights on a weekday. On the initial rota the 4 nights must be consecutive but can adjust when doing swaps.
    * 3 long days on a weekend. On the initial rota the 3 long days must be consecutive but can adjust when doing swaps.
    * 3 nights on a weekend. On the initial rota the 3 nights must be consecutive but can adjust when doing swaps.

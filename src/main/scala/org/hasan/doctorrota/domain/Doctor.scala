@@ -13,6 +13,11 @@ import org.hasan.doctorrota.domain.DayType._
  */
 case class Doctor(name: String, var hoursAllocated: Double, shifts: ListBuffer[Shift]) {
   // scalastyle:off
+  /**
+   * Determines whether all the given shifts are valid.
+   *
+   * @return true if the shifts are valid, otherwise false
+   */
   def validShifts(): Boolean = {
     // Can't average more than 47 hours
     if (hoursAllocated > 470) {
@@ -54,7 +59,7 @@ case class Doctor(name: String, var hoursAllocated: Double, shifts: ListBuffer[S
       return false
     }
 
-    // Correct number of anti social shifts
+    // Checks involving consecutive shifts
     var currentConsecutiveStreak = 1
     var maxConsecutiveStreak = 1
     val sortedShifts = shifts.sortBy(s => s.startDateTime)
@@ -86,4 +91,19 @@ case class Doctor(name: String, var hoursAllocated: Double, shifts: ListBuffer[S
     true
   }
   // scalastyle:on
+
+  /**
+   * Determines if the proposed shift is valid for this doctor. A Shift is valid as long as:
+   * - don't have another shift on same day
+   * - haven't done a night shift the day before
+   *
+   * @param proposed the proposed shift
+   * @return true if the shift is valid, otherwise false.
+   */
+  def isValidShift(proposed: Shift): Boolean = {
+    !this.shifts.exists(s =>
+      (s.startDateTime.getDayOfYear == proposed.startDateTime.getDayOfYear)
+        || (s.shiftType == NIGHT && s.startDateTime.getDayOfYear + 1 == proposed.startDateTime.getDayOfYear)
+    )
+  }
 }
