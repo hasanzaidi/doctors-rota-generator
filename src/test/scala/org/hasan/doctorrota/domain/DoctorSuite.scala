@@ -49,15 +49,15 @@ class DoctorSuite extends AnyFunSuite with Matchers {
     doctor.validShifts() shouldBe false
   }
 
-//  test("can't do more than 7 days in a row") {
-//    // Given:
-//    val shifts = buildValidShifts()
-//    shifts(14) = shifts(14).copy(startDateTime = LocalDateTime.of(2020, 6, 30, 8, 30))
-//
-//    // When/Then:
-//    val doctor = Doctor(DOCTOR_NAME, 410, shifts)
-//    doctor.validShifts() shouldBe false
-//  }
+  test("can't do more than 7 days in a row") {
+    // Given:
+    val shifts = buildValidShifts()
+    shifts(14) = shifts(14).copy(startDateTime = LocalDateTime.of(2020, 6, 30, 8, 30))
+
+    // When/Then:
+    val doctor = Doctor(DOCTOR_NAME, 410, shifts)
+    doctor.validShifts() shouldBe false
+  }
 
   test("must do more than 1 normal weekday shift") {
     // Given:

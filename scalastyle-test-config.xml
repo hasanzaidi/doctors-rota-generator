@@ -108,7 +108,7 @@
  </check>
     <check level="warning" class="org.scalastyle.scalariform.UnderscoreImportChecker" enabled="true">
         <parameters>
-            <parameter name="ignoreRegex">ShiftType\._|DayType\._</parameter>
+            <parameter name="ignoreRegex">ShiftType\._|DayType\._|DayOfWeek._</parameter>
         </parameters>
     </check>
  <check level="warning" class="org.scalastyle.scalariform.LowercasePatternMatchChecker" enabled="true"></check>

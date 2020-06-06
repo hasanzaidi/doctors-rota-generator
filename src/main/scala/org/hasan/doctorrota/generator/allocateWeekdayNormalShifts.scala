@@ -1,5 +1,7 @@
 package org.hasan.doctorrota
 
+import java.time.Month
+
 import org.hasan.doctorrota.domain.Doctor
 import org.hasan.doctorrota.domain.WeeklyRota
 
@@ -9,7 +11,7 @@ import org.hasan.doctorrota.domain.DayType._
 import org.hasan.doctorrota.domain.Shift
 
 /**
- * Allocates the weekday normal shifts.
+ * Allocates the weekday normal shifts. Will allocate any valid weekday normal shift.
  */
 object allocateWeekdayNormalShifts extends ((Seq[WeeklyRota], ListBuffer[Doctor]) => Unit) {
   def apply(weeklyRotas: Seq[WeeklyRota], doctors: ListBuffer[Doctor]): Unit = {
@@ -23,7 +25,7 @@ object allocateWeekdayNormalShifts extends ((Seq[WeeklyRota], ListBuffer[Doctor]
       val doctor = doctors(i)
       if (doctor.isValidShift(proposed)) {
         doctor.shifts += proposed
-        doctor.hoursAllocated = doctor.hoursAllocated + 8
+        doctor.hoursAllocated = doctor.hoursAllocated + NORMAL.hours
       }
     }
   }

@@ -65,8 +65,7 @@ class RotaGenerator(var startDate: LocalDate, numOfWeeks: Int, reader: DoctorRea
   }
 
   private def allocateShiftsToDoctors(weeklyRotas: Seq[WeeklyRota], doctors: ListBuffer[Doctor]): Rota = {
-    allocateWeekendShifts(weeklyRotas, doctors)
-    allocateWeekdayLongDayShifts(weeklyRotas, doctors)
+    allocateAntiSocialShifts(weeklyRotas, doctors)
     allocateWeekdayNormalShifts(weeklyRotas, doctors)
 
     // Create a map of Shift -> Doctor for when we need to print out the rota

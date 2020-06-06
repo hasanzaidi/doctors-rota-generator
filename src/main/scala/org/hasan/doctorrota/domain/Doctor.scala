@@ -82,11 +82,10 @@ case class Doctor(name: String, var hoursAllocated: Double, shifts: ListBuffer[S
       }
     }
 
-// TODO: Fix this
-//    if (maxConsecutiveStreak > 7) {
-//      println("INVALID: Too many days in a row")
-//      return false
-//    }
+    if (maxConsecutiveStreak > 7) {
+      println("INVALID: Too many days in a row")
+      return false
+    }
 
     true
   }
@@ -96,15 +95,47 @@ case class Doctor(name: String, var hoursAllocated: Double, shifts: ListBuffer[S
    * Determines if the proposed shift is valid for this doctor. A Shift is valid as long as:
    * - don't have another shift on same day
    * - haven't done a night shift the day before
+   * - won't involve doing more than 7 days in a row
    *
    * @param proposed the proposed shift
    * @return true if the shift is valid, otherwise false.
    */
   def isValidShift(proposed: Shift): Boolean = {
-    !this.shifts.exists(s =>
+    val sameDayOrCloseToNightShift = this.shifts.exists(s =>
       (s.startDateTime.getDayOfYear == proposed.startDateTime.getDayOfYear)
         || (s.shiftType == NIGHT && s.startDateTime.getDayOfYear + 1 == proposed.startDateTime.getDayOfYear
           && proposed.shiftType != NIGHT)
     )
+
+    !sameDayOrCloseToNightShift && !hasMoreThanSevenShiftsInARow(proposed)
+  }
+
+  private def hasMoreThanSevenShiftsInARow(proposed: Shift): Boolean = {
+    // scalastyle:off
+    if (this.shifts.size <= 6) {
+      return false
+    }
+    // scalastyle:on
+
+    var currentConsecutiveStreak = 1
+    val proposedResult = (this.shifts.toSeq :+ proposed).sortBy(s => s.startDateTime)
+    for (i <- 0 to proposedResult.size - 1) {
+      val shift = proposedResult(i)
+
+      if (i > 0) {
+        val previous = proposedResult(i - 1)
+        if (shift.startDateTime.toLocalDate == previous.startDateTime.toLocalDate.plusDays(1)) {
+          currentConsecutiveStreak = currentConsecutiveStreak + 1
+          // scalastyle:off
+          if (currentConsecutiveStreak > 7) {
+            return true
+          }
+          // scalastyle:on
+        } else {
+          currentConsecutiveStreak = 1
+        }
+      }
+    }
+    false
   }
 }
