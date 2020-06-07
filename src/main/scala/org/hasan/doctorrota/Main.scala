@@ -56,7 +56,8 @@ object Main extends App {
       val doctorName = args(1)
       val swapDate = LocalDate.parse(args(2))
 
-      val swapper = new Swapper(rota, doctorName, swapDate, LocalDateTime.of(2020, 8, 3, 23, 0))
+      // For ease of testing, can replace LocalDateTime.now() below with LocalDateTime.of(2020, 8, 3, 23, 0)
+      val swapper = new Swapper(rota, doctorName, swapDate, LocalDateTime.now())
       val swaps = swapper.generateSwaps()
       displayOutput(swaps)
     }
