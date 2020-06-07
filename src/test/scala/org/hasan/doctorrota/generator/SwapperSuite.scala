@@ -16,7 +16,7 @@ import org.hasan.doctorrota.domain.ShiftType._
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 
-import scala.jdk.CollectionConverters._
+import scala.jdk.CollectionConverters.PropertiesHasAsScala
 
 class SwapperSuite extends AnyFunSuite with Matchers {
   // For some reason the deserialization does not work when running in SBT, so need to disable
@@ -87,6 +87,8 @@ class SwapperSuite extends AnyFunSuite with Matchers {
       swap6.targetShift should equal(
         Shift(LONG_DAY, WEEKEND, LocalDateTime.of(2020, 8, 23, 8, 30), LocalDateTime.of(2020, 8, 23, 21, 0))
       )
+    } else {
+      println("WARNING: Not running SwapperSuite test due to SBT issues")
     }
   }
 
@@ -101,6 +103,8 @@ class SwapperSuite extends AnyFunSuite with Matchers {
 
       // Then:
       swaps should have size (16)
+    } else {
+      println("WARNING: Not running SwapperSuite test due to SBT issues")
     }
   }
 
@@ -115,6 +119,8 @@ class SwapperSuite extends AnyFunSuite with Matchers {
 
       // Then:
       swaps should have size (0)
+    } else {
+      println("WARNING: Not running SwapperSuite test due to SBT issues")
     }
   }
 
