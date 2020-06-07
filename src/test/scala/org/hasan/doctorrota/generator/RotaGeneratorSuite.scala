@@ -1,13 +1,12 @@
-package org.hasan.doctorrota
+package org.hasan.doctorrota.generator
 
 import java.time.LocalDate
 
 import org.hasan.doctorrota.config.DoctorInMemoryReader
-import org.hasan.doctorrota.generator.RotaGenerator
+import org.hasan.doctorrota.domain.Rota
+import org.hasan.doctorrota.domain.ShiftType._
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
-import org.hasan.doctorrota.domain.ShiftType._
-import org.hasan.doctorrota.domain.Rota
 
 class RotaGeneratorSuite extends AnyFunSuite with Matchers {
   test("should generate a rota") {

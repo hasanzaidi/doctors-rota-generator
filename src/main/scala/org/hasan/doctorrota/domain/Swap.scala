@@ -9,9 +9,3 @@ package org.hasan.doctorrota.domain
  * @param targetShift  the shift for the doctor being swapped
  */
 case class Swap(sourceDoctor: Doctor, sourceShift: Shift, targetDoctor: Doctor, targetShift: Shift)
-
-/**
- * Class representing a list of swaps
- * @param swaps the swaps
- */
-case class Swaps(swaps: Seq[Swap])

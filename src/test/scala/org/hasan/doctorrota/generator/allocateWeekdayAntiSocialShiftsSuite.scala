@@ -12,7 +12,6 @@ import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 
 import scala.collection.mutable.ListBuffer
-import scala.io.Source
 
 class allocateWeekdayAntiSocialShiftsSuite extends AnyFunSuite with Matchers {
   test("can allocate anti-social shifts") {

@@ -12,8 +12,7 @@ import scala.collection.mutable.ListBuffer
  * @param doctors          the list of doctors
  * @param shiftToDoctorMap map of shifts to doctors
  */
-case class Rota(weeklyShifts: Seq[WeeklyRota], doctors: Seq[Doctor], shiftToDoctorMap: Map[Shift, ListBuffer[Doctor]])
-    extends Serializable {
+case class Rota(weeklyShifts: Seq[WeeklyRota], doctors: Seq[Doctor], shiftToDoctorMap: Map[Shift, ListBuffer[Doctor]]) {
   override def toString: String = {
     val sb = new StringBuilder()
     for (i <- 0 to weeklyShifts.size - 1) {

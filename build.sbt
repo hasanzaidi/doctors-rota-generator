@@ -25,7 +25,5 @@ scalafmtConfig := file("scalafmt.conf")
 
 libraryDependencies ++= Seq(
   "org.scala-lang" % "scala-reflect" % scalaVersion.value,
-  "ch.qos.logback" % "logback-classic" % "1.2.3",
-  "com.typesafe.scala-logging" %% "scala-logging" % "3.9.2",
-  "org.scalatest" % "scalatest_2.13" % "3.1.2" % "test"
+  "org.scalatest" % "scalatest_2.13" % "3.1.2" % "test",
 )
