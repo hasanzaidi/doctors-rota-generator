@@ -1,19 +1,15 @@
 package org.hasan.doctorrota
 
-import java.io.ByteArrayInputStream
-import java.io.ByteArrayOutputStream
+import java.io.FileInputStream
+import java.io.FileOutputStream
 import java.io.ObjectInputStream
 import java.io.ObjectOutputStream
 import java.time.LocalDate
 import java.time.LocalDateTime
-import java.util.Base64
 
 import org.hasan.doctorrota.config.DoctorInMemoryReader
 import org.hasan.doctorrota.generator.RotaGenerator
 import org.hasan.doctorrota.generator.Swapper
-import java.nio.charset.StandardCharsets.UTF_8
-import java.nio.file.Files
-import java.nio.file.Path
 
 import org.hasan.doctorrota.domain.Rota
 
@@ -41,12 +37,9 @@ object Main extends App {
       println(rota)
 
       // Serialise rota for when do swaps
-      val stream: ByteArrayOutputStream = new ByteArrayOutputStream()
-      val oos = new ObjectOutputStream(stream)
+      val oos = new ObjectOutputStream(new FileOutputStream("rota.txt"))
       oos.writeObject(rota)
       oos.close
-      val rotaAsString = new String(Base64.getEncoder().encode(stream.toByteArray), UTF_8)
-      Files.writeString(Path.of("rota.txt"), rotaAsString)
     }
   }
 
@@ -55,9 +48,7 @@ object Main extends App {
       println("rota.jar swap <doctor wanting swap> <date of shift 1 to swap> [<date of shift n to swap>]")
     } else {
       // De-serialise rota
-      val rotaAsString = Files.readString(Path.of("rota.txt"))
-      val bytes = Base64.getDecoder().decode(rotaAsString.getBytes(UTF_8))
-      val ois = new ObjectInputStream(new ByteArrayInputStream(bytes))
+      val ois = new ObjectInputStream(new FileInputStream("rota.txt"))
       val rota = ois.readObject.asInstanceOf[Rota]
       ois.close
 

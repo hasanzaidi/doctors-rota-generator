@@ -1,13 +1,9 @@
 package org.hasan.doctorrota.generator
 
-import java.io.ByteArrayInputStream
+import java.io.FileInputStream
 import java.io.ObjectInputStream
-import java.nio.charset.StandardCharsets.UTF_8
-import java.nio.file.Files
-import java.nio.file.Path
 import java.time.LocalDate
 import java.time.LocalDateTime
-import java.util.Base64
 
 import org.hasan.doctorrota.domain.DayType._
 import org.hasan.doctorrota.domain.Rota
@@ -125,9 +121,7 @@ class SwapperSuite extends AnyFunSuite with Matchers {
   }
 
   private def deserialiseRota(): Rota = {
-    val rotaAsString = Files.readString(Path.of("src/test/resources/swapperSuite.rota.txt"))
-    val bytes = Base64.getDecoder().decode(rotaAsString.getBytes(UTF_8))
-    val ois = new ObjectInputStream(new ByteArrayInputStream(bytes))
+    val ois = new ObjectInputStream(new FileInputStream("src/test/resources/swapperSuite.rota.txt"))
     val rota = ois.readObject.asInstanceOf[Rota]
     ois.close
     rota
