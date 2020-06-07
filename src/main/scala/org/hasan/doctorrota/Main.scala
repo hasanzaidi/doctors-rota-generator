@@ -10,9 +10,10 @@ import java.time.LocalDateTime
 import org.hasan.doctorrota.config.DoctorInMemoryReader
 import org.hasan.doctorrota.generator.RotaGenerator
 import org.hasan.doctorrota.generator.Swapper
-
 import org.hasan.doctorrota.domain.Rota
+import org.hasan.doctorrota.domain.Swap
 
+// scalastyle:off
 object Main extends App {
   val NUM_WEEKS = 10
 
@@ -55,9 +56,20 @@ object Main extends App {
       val doctorName = args(1)
       val swapDate = LocalDate.parse(args(2))
 
-      val swapper = new Swapper(rota, doctorName, swapDate, LocalDateTime.now())
-      val output = swapper.generateSwaps()
-      println(output)
+      val swapper = new Swapper(rota, doctorName, swapDate, LocalDateTime.of(2020, 8, 3, 23, 0))
+      val swaps = swapper.generateSwaps()
+      displayOutput(swaps)
     }
   }
+
+  def displayOutput(swaps: Seq[Swap]): Unit = {
+    println("Possible swaps for")
+    println(s"Original doctor: ${swaps.head.sourceDoctor.name}")
+    println(s"Their shifts: ${swaps.head.sourceShift}\n")
+    swaps.foreach(s => {
+      println(s"Doctor: ${s.targetDoctor.name}")
+      println(s"Shift: ${s.targetShift}\n")
+    })
+  }
 }
+// scalastyle:on
