@@ -64,3 +64,8 @@ A weekday shift is defined as Monday-Thursday and a weekend shift is defined as 
 1. Currently only supports 2-way swaps
 1. When doing a long day/night on a weekend, can split over multiple weekends (to make swaps easier).
 
+## License
+Copyright (c) 2020 Hasan Zaidi
+
+Published under the MIT License.
+
