@@ -23,12 +23,12 @@ java -jar rota.jar gen 2020-06-01
 
 Run to suggest swap. The rota file is generated when running `gen`:
 ```
-java -jar rota.jar swap <rota file> <doctor wanting swap> <date of shift to swap>
+java -jar rota.jar swap <doctor wanting swap> <date of shift to swap>
 ```
 
 E.g.
 ```
-java -jar rota.jar swap myfile.txt "Fred Smith" 2020-06-01
+java -jar rota.jar swap "Fred Smith" 2020-06-01
 ```
 
 Run Scala formatting on all files:
@@ -63,6 +63,10 @@ A weekday shift is defined as Monday-Thursday and a weekend shift is defined as 
 1. Swaps only apply to anti-social shifts.
 1. Currently only supports 2-way swaps
 1. When doing a long day/night on a weekend, can split over multiple weekends (to make swaps easier).
+
+## Improvements
+* Improve how output is displayed
+* Fix serialisation when running in SBT
 
 ## License
 Copyright (c) 2020 Hasan Zaidi
