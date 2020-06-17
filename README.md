@@ -1,5 +1,5 @@
-# doctors-rota-generator
-Command line application for generating a rota for doctors.
+# medical-team-planner
+Command line application for planning a schedule of shifts for a team of doctors.
 
 ## Run Application
 Run unit tests:
